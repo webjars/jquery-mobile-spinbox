@@ -11,7 +11,7 @@
     <packaging>jar</packaging>
     <groupId>org.webjars</groupId>
     <artifactId>jquery-mobile-spinbox</artifactId>
-    <version>v-1.4.4</version>
+    <version>1.4.4-SNAPSHOT</version>
     <name>WebJar for passy jquery mobile spinbox plugin</name>
     <description>WebJar for jquery mobile spinbox</description>
     <url>http://webjars.org</url>
@@ -21,6 +21,16 @@
         <upstream.version>v-1.4.4</upstream.version>
         <upstream.url>https://github.com/jtsage/jquery-mobile-spinbox/archive/${upstream.version}.zip</upstream.url>
         <destDir>${project.build.outputDirectory}/META-INF/resources/webjars/${project.artifactId}/${project.version}</destDir>
+        <requirejs>
+            {
+                "paths": {
+                    "jquery-mobile-spinbox": "jqm-spinbox"
+                },
+                "shim": {
+                    "jquery-mobile-spinbox": ["jquery-mobile"]
+                }
+            }
+        </requirejs>
     </properties>
 
     <developers>
@@ -74,17 +84,10 @@
 								<echo message="download archive"/>
 								<get src="${upstream.url}" dest="${project.build.directory}/${project.artifactId}.zip"/>
 								<echo message="unzip archive"/>
-								<unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}">
-									<patternset>
-										<exclude name="jquery-mobile-spinbox-v-1.4.4/build/**" />
-                                        <exclude name="jquery-mobile-spinbox-v-1.4.4/external/**" />
-                                        <exclude name="jquery-mobile-spinbox-v-1.4.4/index.html" />
-                                        <exclude name="jquery-mobile-spinbox-v-1.4.4/README.md" />
-                                    </patternset>
-								</unzip>
+								<unzip src="${project.build.directory}/${project.artifactId}.zip" dest="${project.build.directory}"/>
 								<echo message="moving resources"/>
 								<move todir="${destDir}">
-									<fileset dir="${project.build.directory}/${project.artifactId}-${upstream.version}"/>
+									<fileset dir="${project.build.directory}/${project.artifactId}-${upstream.version}/js"/>
 								</move>
 							</target>
 						</configuration>
